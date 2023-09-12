@@ -1,0 +1,220 @@
+@font-face {
+    font-family: "Pretendard";
+    src: url("../fonts/Pretendard-Regular.ttf") format("truetype");
+  }
+
+.postman_form {
+    font-family: 'Pretendard';
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+
+}
+
+.postman_folder {
+    overflow: hidden;
+    width: 80%;
+    background-color: white;
+    border-bottom: 1px solid rgba(125, 125, 125, 0.3);
+    border-left: 1px solid rgba(125, 125, 125, 0.3);
+    border-radius: 5px;
+    
+}
+
+.postman_folder_title {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+
+    height: 80px;
+    align-items: center;
+}
+
+.postman_folder_title div:nth-child(1) {
+    min-width: 200px;
+    width: 200px;
+    margin-left: 15px;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.postman_folder_title div:nth-child(2) {
+    min-width: 400px;
+}
+
+.postman_folder_docs {
+    margin-left: 30px;
+    overflow: hidden;
+    width: calc(80% - 30px);
+}
+
+.postman_folder_docs > div {
+    transition: 0.3s;
+    overflow: hidden;
+    
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 10px;
+    border: 1;
+}
+
+.postman_folder_docs > div:nth-child(1) {
+    margin-top: 10px;
+}
+
+
+.postman_folder_docs_hidden {
+    margin-left: 30px;
+    overflow: hidden;
+    width: calc(80% - 30px);
+    margin-bottom: 0px;
+}
+
+.postman_folder_docs_hidden > div {
+    transition: 0.3s;
+    height: 0px;
+    overflow: hidden;
+
+    border: 0px;
+}
+
+.postman_folder_docs_hidden > div:nth-child(1) {
+    margin-top: 0px;
+}
+
+
+.postman_folder_file {
+    position: relative;
+    height: 500px;
+    border-radius: 3px;
+}
+
+.postman_folder_file_wrap {
+    height: 300px;
+    overflow: auto
+}
+
+.postman_folder_file_hidden {
+    position: relative;
+    height: 50px;
+
+    border-radius: 3px;
+}
+
+.postman_folder_file_detail {
+    top: 50px;
+    width: 100%;
+}
+
+.postman_folder_file_title {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    margin-left: 10px;
+    margin-top: 10px;
+    min-width: 300px;
+}
+
+
+.postman_folder_file_url {
+    margin-top: 5px;
+    margin-left: 15px;
+    min-width: 250px;
+    width: 250px;
+    text-wrap: nowrap;
+    overflow: hidden;
+}
+
+.postman_folder_file_descript {
+    margin-top: 5px;
+    min-width: 300px;
+    text-wrap: nowrap;
+    margin-left: 15px;
+    overflow: hidden;
+}
+
+.postman_folder_file_GET {
+    background-color: rgba(188, 233, 248, 0.4);
+    border: 1px solid rgb(137, 212, 236);
+}
+
+.postman_folder_file_POST {
+    background-color: rgba(180, 231, 222, 0.4);
+    border: 1px solid rgb(101, 194, 177);
+}
+
+
+.postman_folder_method {
+    min-width: 80px;
+    width: 80px;
+    height: 30px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 3px;
+}
+
+.postman_folder_method_GET {
+    background-color: rgb(137, 212, 236);
+
+}
+
+.postman_folder_method_POST {
+    background-color: rgb(101, 194, 177);
+}
+
+
+
+.postman_folder_file_param {
+    background-color: white;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(125, 125, 125, 0.3);
+}
+
+.postman_folder_file_query {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.postman_folder_file_query > div:nth-child(1) {
+    width: 20%;
+    min-width: 200px;
+    padding-left: 20px;
+    padding-top: 5px;
+
+}
+
+.postman_folder_file_query > div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.postman_folder_file_query div:nth-child(2) input {
+
+    min-width: 400px;
+    box-sizing: border-box;
+    height: 35px;
+    outline: 0px;
+    font-size: 15px;
+    border: 1px solid darkgray;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: 'Pretendard';
+
+}
