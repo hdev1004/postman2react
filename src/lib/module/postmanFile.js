@@ -1,15 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../css/postman2React.module.css";
 import PostmanQuery from "./postmanQuery";
 import CodeEditor from '@uiw/react-textarea-code-editor';
+import { cancel, execute } from "../utils/Status";
 
-const execute = () => {
-    alert("Execute !");
-}
-
-const cancle = () => {
-    alert("Cancel !");
-}
 
 const findDescription = (item) => {
     let query = item.item.request.url.query; 
@@ -62,19 +56,31 @@ const PostmanFile = (item) => {
     let descript = findDescription(item);
     let query = getQuery(item);
     let param = getParam(item);
+    let fileRef = useRef(null);
+    let path = item.item.request.url.path;
+    path = path.join("/").replace(/\{\w+\}/g, "").replace(/\/+/g,"/");
+    if(path[path.length - 1] === "/") {
+        path = path.slice(0, path.length - 1);
+    }
+
+    let url = item.item.request.url;
+    let server = `${url.protocol}://${url.host.join(".")}:${url.port}/${path}`
+    //console.log(server);
 
     const [code, setCode] = React.useState(
         ``
       );
 
-    let [json, setJson] = useState("hello world")
+    const [result, setResult] = useState(
+        ``
+    )
 
     return (
-        <div className={`${isClick ? styles.postman_folder_file : styles.postman_folder_file_hidden} ${methodStyling(method)}`} >
+        <div ref={fileRef} className={`${isClick ? styles.postman_folder_file : styles.postman_folder_file_hidden} ${methodStyling(method)}`} >
             <div className={styles.postman_folder_file_title} onClick={() => {setIsClick(!isClick)}}>
                 <div className={`${styles.postman_folder_method} ${methodStylingTitle(method)}`}>{method}</div>
                 <div className={styles.postman_folder_file_url}>
-                📜 {"/" + item.item.request.url.path.join("/")}
+                {isClick ? "📖" : "📘"} {"/" + item.item.request.url.path.join("/")}
                 </div>
                 <div className={styles.postman_folder_file_descript}>{descript}</div>
                 
@@ -121,8 +127,8 @@ const PostmanFile = (item) => {
 
                 <div style={{marginBottom: "40px"}}></div>
                 <div className={styles.postman_execute_wrap}>
-                    <div onClick={() => {execute()}}>Execute</div>
-                    <div onClick={() => {cancle()}}>Cancle</div>
+                    <div onClick={() => {execute(method, server, fileRef, setResult)}}>Execute</div>
+                    <div onClick={() => {cancel(fileRef)}}>Cancle</div>
                 </div>
 
 
@@ -130,19 +136,23 @@ const PostmanFile = (item) => {
                 <div className={styles.postman_folder_file_param}>
                     Result
                 </div>
-                <CodeEditor
-                    disabled={true}
-                    value={code}
-                    language="json"
-                    placeholder="result"
-                    onChange={(evn) => setCode(evn.target.value)}
-                    padding={15}
-                    style={{
-                        fontSize: 15,
-                        backgroundColor: "white",
-                        fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                      }}
-                />
+
+                <div className={styles.postman_scroll} style={{maxHeight: "400px",  overflow: "auto"}}>
+
+                    <CodeEditor
+                        disabled={true}
+                        value={result}
+                        language="json"
+                        placeholder="result"
+                        padding={15}
+                        style={{
+                            fontSize: 15,
+                            backgroundColor: "white",
+                            fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                        }}
+                    />
+                </div>
+                
 
             </div>
         </div>

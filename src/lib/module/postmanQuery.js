@@ -10,7 +10,7 @@ const PostmanQuery = ({kind, data}) => {
             </div>
 
             <div>
-                <input spellCheck={false}></input>
+                <input spellCheck={false} data-type={kind} data-key={kind === "Param" ? data : data.key}></input>
             </div>
         </div>
     )

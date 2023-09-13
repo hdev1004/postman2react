@@ -9,8 +9,7 @@ const PostmanFolder = ({title, item}) => {
         <>
         <div className={styles.postman_folder} onClick={() => {setIsClick(!isClick)}}>
             <div className={styles.postman_folder_title}>
-                <div>📂 { title }</div>
-                <div>이것은 설명입니다이것은 설명입니다이것은 설명입니다이것은 설명입니다이것은 설명입니다</div>
+                <div>{isClick ? "📂" : "📁"} { title }</div>
             </div>
         </div>
 
