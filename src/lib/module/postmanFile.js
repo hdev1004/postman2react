@@ -25,6 +25,11 @@ const getQuery = (item) => {
     return query;
 }
 
+const getHeader = (item) => {
+    let header = item.item.request.header;
+    return header;
+}
+
 const getParam = (item) => {
     let path = item.item.request.url.path;
     let result = [];
@@ -36,6 +41,15 @@ const getParam = (item) => {
         }
     })
     return result;
+}
+
+const getBody = (item) => {
+    let body = item.item.request.body;
+
+    if(body === undefined) return undefined;
+
+    body = JSON.parse(body.raw);
+    return body;
 }
 
 const methodStyling = (method) => {
@@ -55,7 +69,10 @@ const PostmanFile = (item) => {
     let method = item.item.request.method;
     let descript = findDescription(item);
     let query = getQuery(item);
+    let header = getHeader(item);
     let param = getParam(item);
+    let body = getBody(item);
+
     let fileRef = useRef(null);
     let path = item.item.request.url.path;
     path = path.join("/").replace(/\{\w+\}/g, "").replace(/\/+/g,"/");
@@ -68,7 +85,7 @@ const PostmanFile = (item) => {
     //console.log(server);
 
     const [code, setCode] = React.useState(
-        ``
+        body === undefined ? `` : JSON.stringify(body, null, 2)
       );
 
     const [result, setResult] = useState(
@@ -87,43 +104,64 @@ const PostmanFile = (item) => {
             </div>
 
             <div className={styles.postman_folder_file_detail}>
-                <br></br>
+                {
+                    param.length === 0 && query.length === 0 && header.length === 0? (
+                        <></>
+                    ) : (
+                        <>
+                            <br></br>
+                            <div className={styles.postman_folder_file_param}>
+                                Parameters
+                            </div>
 
-                <div className={styles.postman_folder_file_param}>
-                    Parameters
-                </div>
+                            <div className={styles.postman_folder_file_wrap}>
+                                {
+                                    header.map((data) => (
+                                        <PostmanQuery kind={"Header"} data={data}></PostmanQuery>
+                                    ))
+                                }
 
-                <div className={styles.postman_folder_file_wrap}>
-                    {
-                        param.map((data) => (
-                            <PostmanQuery kind={"Param"} data={data}></PostmanQuery>
-                        ))
-                    }
+                                {
+                                    param.map((data) => (
+                                        <PostmanQuery kind={"Param"} data={data}></PostmanQuery>
+                                    ))
+                                }
 
-                    {
-                        query.map((data) => (
-                            <PostmanQuery kind={"Query"} data={data}></PostmanQuery>
-                        ))
-                    }
-                </div>
+                                {
+                                    query.map((data) => (
+                                        <PostmanQuery kind={"Query"} data={data}></PostmanQuery>
+                                    ))
+                                }
+                            </div>
+                        </>
+                    )
+                }
                 
-
-                <div style={{marginBottom: "80px"}}></div>
-                <div className={styles.postman_folder_file_param}>
-                    Body
-                </div>
-                <CodeEditor
-                    value={code}
-                    language="json"
-                    placeholder="Body Input"
-                    onChange={(evn) => setCode(evn.target.value)}
-                    padding={15}
-                    style={{
-                        fontSize: 15,
-                        backgroundColor: "white",
-                        fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
-                      }}
-                />
+                {
+                    body ? (
+                        <>
+                            <br/>
+                            <div className={styles.postman_folder_file_param}>
+                                Body
+                            </div>
+                            <CodeEditor
+                                value={code}
+                                language="json"
+                                placeholder="Body Input"
+                                onChange={(evn) => setCode(evn.target.value)}
+                                padding={15}
+                                style={{
+                                    fontSize: 15,
+                                    backgroundColor: "white",
+                                    fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
+                                }}
+                            />
+                        </>
+                    ) : (
+                        <></>
+                    )
+                }
+               
 
                 <div style={{marginBottom: "40px"}}></div>
                 <div className={styles.postman_execute_wrap}>

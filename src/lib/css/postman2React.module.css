@@ -116,6 +116,7 @@
 }
 
 .postman_folder_file_wrap {
+    margin-bottom: 80px;
 }
 
  
@@ -233,7 +234,7 @@
 
 .postman_folder_file_query div:nth-child(2) input {
     transition: 0.3s;
-    min-width: 400px;
+
     box-sizing: border-box;
     height: 35px;
     outline: 0px;
