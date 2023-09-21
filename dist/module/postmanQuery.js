@@ -12,8 +12,24 @@ var PostmanQuery = function PostmanQuery(_ref) {
     data = _ref.data;
   return /*#__PURE__*/_react.default.createElement("div", {
     className: _postman2ReactModule.default.postman_folder_file_query
-  }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", null, "( ", kind, " )"), /*#__PURE__*/_react.default.createElement("div", null, kind === "Param" ? data : data.key)), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("input", {
-    spellCheck: false
+  }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, "( ", kind, " )"), /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      textAlign: "center"
+    }
+  }, kind === "Param" ? data : data.key)), /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      maxWidth: "500px",
+      width: "50%"
+    }
+  }, /*#__PURE__*/_react.default.createElement("input", {
+    spellCheck: false,
+    "data-type": kind,
+    "data-key": kind === "Param" ? data : data.key,
+    value: kind === "" ? data : data.value
   })));
 };
 var _default = PostmanQuery;

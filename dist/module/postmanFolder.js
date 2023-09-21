@@ -31,7 +31,7 @@ var PostmanFolder = function PostmanFolder(_ref) {
     }
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: _postman2ReactModule.default.postman_folder_title
-  }, /*#__PURE__*/_react.default.createElement("div", null, "\uD83D\uDCC2 ", title), /*#__PURE__*/_react.default.createElement("div", null, "\uC774\uAC83\uC740 \uC124\uBA85\uC785\uB2C8\uB2E4\uC774\uAC83\uC740 \uC124\uBA85\uC785\uB2C8\uB2E4\uC774\uAC83\uC740 \uC124\uBA85\uC785\uB2C8\uB2E4\uC774\uAC83\uC740 \uC124\uBA85\uC785\uB2C8\uB2E4\uC774\uAC83\uC740 \uC124\uBA85\uC785\uB2C8\uB2E4"))), /*#__PURE__*/_react.default.createElement("div", {
+  }, /*#__PURE__*/_react.default.createElement("div", null, isClick ? "📂" : "📁", " ", title))), /*#__PURE__*/_react.default.createElement("div", {
     className: isClick ? _postman2ReactModule.default.postman_folder_docs : _postman2ReactModule.default.postman_folder_docs_hidden
   }, item.map(function (doc) {
     return /*#__PURE__*/_react.default.createElement(_postmanFile.default, {

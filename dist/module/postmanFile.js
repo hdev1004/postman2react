@@ -8,6 +8,8 @@ exports.default = void 0;
 var _react = _interopRequireWildcard(require("react"));
 var _postman2ReactModule = _interopRequireDefault(require("../css/postman2React.module.css"));
 var _postmanQuery = _interopRequireDefault(require("./postmanQuery"));
+var _reactTextareaCodeEditor = _interopRequireDefault(require("@uiw/react-textarea-code-editor"));
+var _Status = require("../utils/Status");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -36,6 +38,10 @@ var getQuery = function getQuery(item) {
   });
   return query;
 };
+var getHeader = function getHeader(item) {
+  var header = item.item.request.header;
+  return header;
+};
 var getParam = function getParam(item) {
   var path = item.item.request.url.path;
   var result = [];
@@ -46,6 +52,12 @@ var getParam = function getParam(item) {
     }
   });
   return result;
+};
+var getBody = function getBody(item) {
+  var body = item.item.request.body;
+  if (body === undefined) return undefined;
+  body = JSON.parse(body.raw);
+  return body;
 };
 var methodStyling = function methodStyling(method) {
   if (method === "GET") return _postman2ReactModule.default.postman_folder_file_GET;else if (method === "POST") return _postman2ReactModule.default.postman_folder_file_POST;
@@ -61,8 +73,29 @@ var PostmanFile = function PostmanFile(item) {
   var method = item.item.request.method;
   var descript = findDescription(item);
   var query = getQuery(item);
+  var header = getHeader(item);
   var param = getParam(item);
+  var body = getBody(item);
+  var fileRef = (0, _react.useRef)(null);
+  var path = item.item.request.url.path;
+  path = path.join("/").replace(/\{\w+\}/g, "").replace(/\/+/g, "/");
+  if (path[path.length - 1] === "/") {
+    path = path.slice(0, path.length - 1);
+  }
+  var url = item.item.request.url;
+  var server = "".concat(url.protocol, "://").concat(url.host.join("."), ":").concat(url.port, "/").concat(path);
+  //console.log(server);
+
+  var _React$useState = _react.default.useState(body === undefined ? "" : JSON.stringify(body, null, 2)),
+    _React$useState2 = _slicedToArray(_React$useState, 2),
+    code = _React$useState2[0],
+    setCode = _React$useState2[1];
+  var _useState3 = (0, _react.useState)(""),
+    _useState4 = _slicedToArray(_useState3, 2),
+    result = _useState4[0],
+    setResult = _useState4[1];
   return /*#__PURE__*/_react.default.createElement("div", {
+    ref: fileRef,
     className: "".concat(isClick ? _postman2ReactModule.default.postman_folder_file : _postman2ReactModule.default.postman_folder_file_hidden, " ").concat(methodStyling(method))
   }, /*#__PURE__*/_react.default.createElement("div", {
     className: _postman2ReactModule.default.postman_folder_file_title,
@@ -73,15 +106,20 @@ var PostmanFile = function PostmanFile(item) {
     className: "".concat(_postman2ReactModule.default.postman_folder_method, " ").concat(methodStylingTitle(method))
   }, method), /*#__PURE__*/_react.default.createElement("div", {
     className: _postman2ReactModule.default.postman_folder_file_url
-  }, "\uD83D\uDCDC ", "/" + item.item.request.url.path.join("/")), /*#__PURE__*/_react.default.createElement("div", {
+  }, isClick ? "📖" : "📘", " ", "/" + item.item.request.url.path.join("/")), /*#__PURE__*/_react.default.createElement("div", {
     className: _postman2ReactModule.default.postman_folder_file_descript
   }, descript)), /*#__PURE__*/_react.default.createElement("div", {
     className: _postman2ReactModule.default.postman_folder_file_detail
-  }, /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("div", {
+  }, param.length === 0 && query.length === 0 && header.length === 0 ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("div", {
     className: _postman2ReactModule.default.postman_folder_file_param
   }, "Parameters"), /*#__PURE__*/_react.default.createElement("div", {
     className: _postman2ReactModule.default.postman_folder_file_wrap
-  }, param.map(function (data) {
+  }, header.map(function (data) {
+    return /*#__PURE__*/_react.default.createElement(_postmanQuery.default, {
+      kind: "Header",
+      data: data
+    });
+  }), param.map(function (data) {
     return /*#__PURE__*/_react.default.createElement(_postmanQuery.default, {
       kind: "Param",
       data: data
@@ -91,6 +129,58 @@ var PostmanFile = function PostmanFile(item) {
       kind: "Query",
       data: data
     });
+  }))), body ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("div", {
+    className: _postman2ReactModule.default.postman_folder_file_param
+  }, "Body"), /*#__PURE__*/_react.default.createElement(_reactTextareaCodeEditor.default, {
+    value: code,
+    language: "json",
+    placeholder: "Body Input",
+    onChange: function onChange(evn) {
+      return setCode(evn.target.value);
+    },
+    padding: 15,
+    style: {
+      fontSize: 15,
+      backgroundColor: "white",
+      fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace'
+    }
+  })) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null), /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      marginBottom: "40px"
+    }
+  }), /*#__PURE__*/_react.default.createElement("div", {
+    className: _postman2ReactModule.default.postman_execute_wrap
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    onClick: function onClick() {
+      (0, _Status.execute)(method, server, fileRef, setResult);
+    }
+  }, "Execute"), /*#__PURE__*/_react.default.createElement("div", {
+    onClick: function onClick() {
+      (0, _Status.cancel)(fileRef);
+    }
+  }, "Cancle")), /*#__PURE__*/_react.default.createElement("div", {
+    style: {
+      marginBottom: "80px"
+    }
+  }), /*#__PURE__*/_react.default.createElement("div", {
+    className: _postman2ReactModule.default.postman_folder_file_param
+  }, "Result"), /*#__PURE__*/_react.default.createElement("div", {
+    className: _postman2ReactModule.default.postman_scroll,
+    style: {
+      maxHeight: "400px",
+      overflow: "auto"
+    }
+  }, /*#__PURE__*/_react.default.createElement(_reactTextareaCodeEditor.default, {
+    disabled: true,
+    value: result,
+    language: "json",
+    placeholder: "result",
+    padding: 15,
+    style: {
+      fontSize: 15,
+      backgroundColor: "white",
+      fontFamily: 'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace'
+    }
   }))));
 };
 var _default = PostmanFile;
