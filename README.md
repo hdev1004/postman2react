@@ -21,7 +21,7 @@ npm i postman2react
 
 2. postman에서 json을 추출 합니다.
    
-![postman](https://github.com/hdev1004/postman2react/assets/59737252/28466d8b-14cd-416c-a1ee-bebea0044ef0) 
+![postman](https://github.com/hdev1004/postman2react/assets/59737252/1b15b88c-63bd-4c90-80bc-feb852e657b6)
 
 <br/>
 
@@ -50,7 +50,7 @@ function App() {
 
 4. 결과 확인
 
-![스크린샷](https://github.com/hdev1004/postman2react/assets/59737252/975e202c-7c65-4211-afa6-6e8975f3c762)
+![스크린샷](https://github.com/hdev1004/postman2react/assets/59737252/7d7e24e4-77eb-41a3-bcce-d53497ce564e)
 
 <br/>
 
@@ -75,7 +75,7 @@ npm i postman2react
 
 2. postman에서 json을 추출 합니다.
    
-![postman](https://github.com/hdev1004/postman2react/assets/59737252/28466d8b-14cd-416c-a1ee-bebea0044ef0) 
+![postman](https://github.com/hdev1004/postman2react/assets/59737252/1b15b88c-63bd-4c90-80bc-feb852e657b6)
 
 <br/>
 
@@ -105,6 +105,6 @@ function App() {
 
 4. Check results
 
-![스크린샷](https://github.com/hdev1004/postman2react/assets/59737252/975e202c-7c65-4211-afa6-6e8975f3c762)
+![스크린샷](https://github.com/hdev1004/postman2react/assets/59737252/7d7e24e4-77eb-41a3-bcce-d53497ce564e)
 
 <br/>
