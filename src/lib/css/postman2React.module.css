@@ -168,7 +168,6 @@
     margin-left: 15px;
     overflow: hidden;
 }
-
 .postman_folder_file_GET {
     background-color: rgba(188, 233, 248, 0.4);
     border: 1px solid rgb(137, 212, 236);
@@ -178,6 +177,37 @@
     background-color: rgba(180, 231, 222, 0.4);
     border: 1px solid rgb(101, 194, 177);
 }
+
+.postman_folder_file_DELETE {
+    background-color: rgba(255, 172, 172, 0.4);
+    border: 1px solid rgb(255, 105, 105);
+}
+
+.postman_folder_file_DELETE {
+    background-color: rgba(255, 172, 172, 0.4);
+    border: 1px solid rgb(255, 105, 105);
+}
+
+.postman_folder_file_PUT {
+    background-color: rgba(255, 250, 221, 0.4);
+    border: 1px solid rgb(221, 194, 41);
+}
+
+.postman_folder_file_PATCH {
+    background-color: rgba(100, 153, 233, 0.4);
+    border: 1px solid rgb(100, 153, 233);
+}
+
+.postman_folder_file_OPTIONS {
+    background-color: rgba(33, 53, 85, 0.4);
+    border: 1px solid rgb(33, 53, 85);
+}
+
+.postman_folder_file_HEAD {
+    background-color: rgba(150, 194, 145, 0.4);
+    border: 1px solid rgb(150, 194, 145);
+}
+
 
 
 .postman_folder_method {
@@ -199,6 +229,30 @@
 .postman_folder_method_POST {
     background-color: rgb(101, 194, 177);
 }
+
+.postman_folder_method_DELETE {
+    background-color: rgb(255, 105, 105);
+}
+
+.postman_folder_method_PUT {
+    background-color: rgb(221, 194, 41);
+}
+
+.postman_folder_method_PATCH {
+    background-color: rgb(100, 153, 233);
+}
+
+.postman_folder_method_OPTIONS {
+    background-color: rgb(33, 53, 85);
+}
+
+.postman_folder_method_HEAD {
+    background-color: rgb(150, 194, 145);
+}
+
+
+
+
 
 
 
@@ -234,6 +288,7 @@
 
 .postman_folder_file_query div:nth-child(2) input {
     transition: 0.3s;
+    width: 100%;
 
     box-sizing: border-box;
     height: 35px;
@@ -248,6 +303,21 @@
 
 .postman_folder_file_query div:nth-child(2) input:focus {
     border: 1px solid #2b90d9;
+}
+
+.postman_folder_btn {
+    cursor: pointer;
+    background-color: #D0E7D2;
+    color: black;
+    width: 200px;
+    height: 35px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    border-radius: 5px;
+
+    border: 1px solid #79AC78;
+
 }
 
 .postman_execute_wrap {
@@ -288,4 +358,30 @@
 
 .postman_execute_wrap > div:nth-child(2):hover {
     background-color: #98cbf0;
+}
+
+.input_wrap {
+    display: flex;
+    flex-direction: row;
+}
+
+.input_delete {
+    cursor: pointer;
+    width: 50px;
+    height: 35px;
+    line-height: 35px;
+    margin-left: 20px;
+    margin-top: 9px;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+
+    background-color: #FF6969;
+    
+}
+
+.input_delete img {
+    width: 25px;
+    margin-top: 5px;
 }

@@ -31,7 +31,7 @@ export const execute = (method, server, ref, setCode) => {
         } else if(type === "Query") {
             params[type].map((value) => {
                 let key = Object.keys(value)[0]
-                query += value[key] + "&"
+                query += key + "=" + value[key] + "&"
             })
         } else if(type === "Header") {
             params[type].map((value) => {
@@ -58,7 +58,7 @@ export const execute = (method, server, ref, setCode) => {
             result = JSON.stringify(result, null, 2);
             setCode(result);
         }).catch((err) => {
-
+            setCode(err.message);
         })
     } else if(method === "POST") {
         axios.post(requestURL, body, {
@@ -68,7 +68,57 @@ export const execute = (method, server, ref, setCode) => {
             result = JSON.stringify(result, null, 2);
             setCode(result);
         }).catch((err) => {
-
+            setCode(err.message);
+        })
+    } else if(method === "DELETE") {
+        axios.delete(requestURL, body, {
+            headers: header
+        }).then((res) => {
+            let result = res.data.data;
+            result = JSON.stringify(result, null, 2);
+            setCode(result);
+        }).catch((err) => {
+            setCode(err.message);
+        })
+    } else if(method === "PUT") {
+        axios.delete(requestURL, body, {
+            headers: header
+        }).then((res) => {
+            let result = res.data.data;
+            result = JSON.stringify(result, null, 2);
+            setCode(result);
+        }).catch((err) => {
+            setCode(err.message);
+        })
+    } else if(method === "PATCH") {
+        axios.patch(requestURL, body, {
+            headers: header
+        }).then((res) => {
+            let result = res.data.data;
+            result = JSON.stringify(result, null, 2);
+            setCode(result);
+        }).catch((err) => {
+            setCode(err.message);
+        })
+    } else if(method === "OPTIONS") {
+        axios.options(requestURL, body, {
+            headers: header
+        }).then((res) => {
+            let result = res.data.data;
+            result = JSON.stringify(result, null, 2);
+            setCode(result);
+        }).catch((err) => {
+            setCode(err.message);
+        })
+    } else if(method === "HEAD") {
+        axios.head(requestURL, body, {
+            headers: header
+        }).then((res) => {
+            let result = res.data.data;
+            result = JSON.stringify(result, null, 2);
+            setCode(result);
+        }).catch((err) => {
+            setCode(err.message);
         })
     }
     

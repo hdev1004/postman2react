@@ -20,24 +20,61 @@ const findDescription = (item) => {
 
 const getQuery = (item) => {
     let query = item.item.request.url.query;
+    let dupCheck = {};
+    let result = [];
     if(query === undefined) return []; 
     query = query?.filter(prev => prev.key !== "postman_description");
-    return query;
+    query.map((data) => {
+        if(dupCheck[data.key] === undefined) {
+            dupCheck[data.key] = data.value
+        } else {
+            if(Array.isArray(dupCheck[data.key])) {
+                dupCheck[data.key] = [
+                    ...dupCheck[data.key],
+                    data.value
+                ]
+            } else {
+                dupCheck[data.key] = [
+                    dupCheck[data.key],
+                    data.value
+                ]
+            }
+        }
+    })
+
+    Object.keys(dupCheck).map((data) => {
+        result.push({
+            key: data,
+            value: dupCheck[data]
+        })
+    })
+
+    console.log("RESULT : ", result);
+
+    return result;
 }
 
 const getHeader = (item) => {
     let header = item.item.request.header;
+
+    header.map((item) => {
+        
+    })
     return header;
 }
+
 
 const getParam = (item) => {
     let path = item.item.request.url.path;
     let result = [];
-
+    if(path === undefined) return result;
     path.map((item) => {
         if(item.includes("{") && item.includes("}")) {
             let data = item.replace(/{/g, "").replace(/}/g, "");
-            result.push(data);
+            result.push({
+                key: data,
+                value: ""
+            });
         }
     })
     return result;
@@ -55,12 +92,22 @@ const getBody = (item) => {
 const methodStyling = (method) => {
     if(method === "GET") return styles.postman_folder_file_GET;
     else if(method === "POST") return styles.postman_folder_file_POST;
+    else if(method === "DELETE") return styles.postman_folder_file_DELETE;
+    else if(method === "PUT") return styles.postman_folder_file_PUT;
+    else if(method === "PATCH") return styles.postman_folder_file_PATCH;
+    else if(method === "OPTIONS") return styles.postman_folder_file_OPTIONS;
+    else if(method === "HEAD") return styles.postman_folder_file_HEAD;
 }
 
 
 const methodStylingTitle = (method) => {
     if(method === "GET") return styles.postman_folder_method_GET;
     else if(method === "POST") return styles.postman_folder_method_POST;
+    else if(method === "DELETE") return styles.postman_folder_method_DELETE;
+    else if(method === "PUT") return styles.postman_folder_method_PUT;
+    else if(method === "PATCH") return styles.postman_folder_method_PATCH;
+    else if(method === "OPTIONS") return styles.postman_folder_method_OPTIONS;
+    else if(method === "HEAD") return styles.postman_folder_method_HEAD;
 }
 
 
@@ -75,10 +122,17 @@ const PostmanFile = (item) => {
 
     let fileRef = useRef(null);
     let path = item.item.request.url.path;
-    path = path.join("/").replace(/\{\w+\}/g, "").replace(/\/+/g,"/");
-    if(path[path.length - 1] === "/") {
-        path = path.slice(0, path.length - 1);
+    
+    if(path !== undefined){
+        path = path.join("/").replace(/\{\w+\}/g, "").replace(/\/+/g,"/");
+        if(path[path.length - 1] === "/") {
+            path = path.slice(0, path.length - 1);
+        }
+    } else {
+        path = "";
     }
+
+        
 
     let url = item.item.request.url;
     let server = `${url.protocol}://${url.host.join(".")}:${url.port}/${path}`
@@ -91,13 +145,20 @@ const PostmanFile = (item) => {
     const [result, setResult] = useState(
         ``
     )
-
+    
     return (
         <div ref={fileRef} className={`${isClick ? styles.postman_folder_file : styles.postman_folder_file_hidden} ${methodStyling(method)}`} >
             <div className={styles.postman_folder_file_title} onClick={() => {setIsClick(!isClick)}}>
                 <div className={`${styles.postman_folder_method} ${methodStylingTitle(method)}`}>{method}</div>
                 <div className={styles.postman_folder_file_url}>
-                {isClick ? "📖" : "📘"} {"/" + item.item.request.url.path.join("/")}
+                    
+                {isClick ? "📖" : "📘"} {
+                    Array.isArray(item.item.request.url.path) ? (
+                        "/" + item.item.request.url.path?.join("/")
+                    ) : (
+                        "/"
+                    )
+                }
                 </div>
                 <div className={styles.postman_folder_file_descript}>{descript}</div>
                 
