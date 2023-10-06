@@ -19,28 +19,48 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var Postman2React = function Postman2React(_ref) {
   var postmanJson = _ref.postmanJson,
-    url = _ref.url;
-  console.log(postmanJson);
+    url = _ref.url,
+    equalize = _ref.equalize;
   var _useState = (0, _react.useState)(null),
     _useState2 = _slicedToArray(_useState, 2),
     postman = _useState2[0],
     setPostman = _useState2[1];
   (0, _react.useEffect)(function () {
     var result = {};
-    postmanJson.item.map(function (item, index) {
+    postmanJson.item && postmanJson.item.map(function (item, index) {
       if (url === "*") {
         result[item.name] = item.item;
       } else {
-        var filter = item.item.filter(function (prev) {
-          return prev.request.url.path.join("/") + "/" === url;
-        });
-        if (filter.length > 0) {
-          result[item.name] = filter;
+        if (url === "/") {
+          var filter = item.item.filter(function (prev) {
+            return prev.request.url.path === undefined;
+          });
+          if (filter.length > 0) {
+            result[item.name] = filter;
+          }
+        } else {
+          if (!equalize) {
+            //포함이 될 때
+            var _filter = item.item.filter(function (prev) {
+              return prev.request.url.path && ("/" + prev.request.url.path.join("/")).includes(url);
+            });
+            if (_filter.length > 0) {
+              result[item.name] = _filter;
+            }
+          } else {
+            //완전히 같게
+            var _filter2 = item.item.filter(function (prev) {
+              return prev.request.url.path && "/" + prev.request.url.path.join("/") === url;
+            });
+            if (_filter2.length > 0) {
+              result[item.name] = _filter2;
+            }
+          }
         }
       }
     });
     setPostman(result);
-  }, []);
+  }, [postmanJson]);
   return /*#__PURE__*/_react.default.createElement("div", {
     className: _postman2ReactModule.default.postman_form
   }, postman && Object.keys(postman).map(function (item) {

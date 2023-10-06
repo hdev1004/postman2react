@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "13130238-ad64-472e-ac07-6b9409590507",
-		"name": "Hdev_Local",
+		"_postman_id": "a463f416-d337-48d0-8b41-8740998a87a3",
+		"name": "Postman2React",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26686901"
 	},
@@ -10,45 +10,47 @@
 			"name": "Users",
 			"item": [
 				{
-					"name": "getUser",
+					"name": "getUsers",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/users/{id}",
-							"protocol": "http",
+							"raw": "https://reqres.in/api/users?page=2",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"reqres",
+								"in"
 							],
-							"port": "5000",
 							"path": [
-								"users",
-								"{id}"
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "getUsers",
+					"name": "getUser",
 					"request": {
 						"method": "GET",
-						"header": [
-							{
-								"key": "test",
-								"value": "12345",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/users",
-							"protocol": "http",
+							"raw": "https://reqres.in/api/users/{id}",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"reqres",
+								"in"
 							],
-							"port": "5000",
 							"path": [
-								"users"
+								"api",
+								"users",
+								"{id}"
 							]
 						}
 					},
@@ -61,7 +63,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"tester\"\r\n}",
+							"raw": "{\r\n    \"name\": \"hdev1004\",\r\n    \"job\": \"development\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -69,13 +71,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/users",
-							"protocol": "http",
+							"raw": "https://reqres.in/api/users",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"reqres",
+								"in"
 							],
-							"port": "5000",
 							"path": [
+								"api",
 								"users"
 							]
 						}
@@ -83,147 +86,13 @@
 					"response": []
 				},
 				{
-					"name": "delUser",
+					"name": "editUser",
 					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/users/{id}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"users",
-								"{id}"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"description": "사용자 관리 (User Manage)"
-		},
-		{
-			"name": "Pages",
-			"item": [
-				{
-					"name": "getPages_search",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/pages?search=quis&search=nisi",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"pages"
-							],
-							"query": [
-								{
-									"key": "search",
-									"value": "quis"
-								},
-								{
-									"key": "search",
-									"value": "nisi"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getPages_id_search",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/pages/{id}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"pages",
-								"{id}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getPages",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/pages",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"pages"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getPage",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/pages/{id}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"pages",
-								"{id}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delPage",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000/pages/{id}",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "5000",
-							"path": [
-								"pages",
-								"{id}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "addPage",
-					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"writer\": \"hdev1004\",\r\n    \"contents\": \"군사법원의 조직·권한 및 재판관의 자격은 법률로 정한다. 국회는 헌법개정안이 공고된 날로부터 60일 이내에 의결하여야 하며, 국회의 의결은 재적의원 3분의 2 이상의 찬성을 얻어야 한다.\"\r\n}",
+							"raw": "{\r\n    \"name\": \"hdev1004\",\r\n    \"job\": \"tester\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -231,85 +100,148 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/pages",
-							"protocol": "http",
+							"raw": "https://reqres.in/api/users/{id}",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"reqres",
+								"in"
 							],
-							"port": "5000",
 							"path": [
-								"pages"
+								"api",
+								"users",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "patchUser",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"hdev1004\",\r\n    \"job\": \"patch_tester\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://reqres.in/api/users/{id}",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DelUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://reqres.in/api/users/{id}",
+							"protocol": "https",
+							"host": [
+								"reqres",
+								"in"
+							],
+							"path": [
+								"api",
+								"users",
+								"{id}"
 							]
 						}
 					},
 					"response": []
 				}
-			],
-			"description": "글 작성 내역 (Pages)"
+			]
 		},
 		{
-			"name": "Test",
+			"name": "Register",
 			"item": [
 				{
-					"name": "testPatch",
+					"name": "getRegister",
 					"request": {
-						"method": "PATCH",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000",
-							"protocol": "http",
+							"raw": "https://reqres.in/api/register",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"reqres",
+								"in"
 							],
-							"port": "5000"
+							"path": [
+								"api",
+								"register"
+							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "testPut",
+					"name": "addRegister",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"george.bluth@reqres.in\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:5000",
-							"protocol": "http",
+							"raw": "https://reqres.in/api/register",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"reqres",
+								"in"
 							],
-							"port": "5000"
+							"path": [
+								"api",
+								"register"
+							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "testOptions",
+					"name": "delay",
 					"request": {
-						"method": "OPTIONS",
+						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000",
-							"protocol": "http",
+							"raw": "https://reqres.in/api/users?delay=3",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"reqres",
+								"in"
 							],
-							"port": "5000"
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "testHead",
-					"request": {
-						"method": "HEAD",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:5000",
-							"protocol": "http",
-							"host": [
-								"localhost"
+							"path": [
+								"api",
+								"users"
 							],
-							"port": "5000"
+							"query": [
+								{
+									"key": "delay",
+									"value": "3"
+								}
+							]
 						}
 					},
 					"response": []

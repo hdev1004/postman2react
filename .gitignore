@@ -10,6 +10,9 @@
 
 # production
 /build
+/public
+/dist
+
 
 # misc
 .DS_Store
@@ -23,3 +26,4 @@ yarn-debug.log*
 yarn-error.log*
 
 Babble.postman_collection.json
+firebase.js

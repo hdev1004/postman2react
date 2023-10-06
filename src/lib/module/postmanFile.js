@@ -3,6 +3,7 @@ import styles from "../css/postman2React.module.css";
 import PostmanQuery from "./postmanQuery";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import { cancel, execute } from "../utils/Status";
+import axios from "axios";
 
 
 const findDescription = (item) => {
@@ -64,7 +65,7 @@ const getHeader = (item) => {
 }
 
 
-const getParam = (item) => {
+const getParam = (item) => { 
     let path = item.item.request.url.path;
     let result = [];
     if(path === undefined) return result;
@@ -112,6 +113,7 @@ const methodStylingTitle = (method) => {
 
 
 const PostmanFile = (item) => {
+    let [cancleToken, setCancleToken] = useState(axios.CancelToken.source());
     let [isClick, setIsClick] = useState(false);
     let method = item.item.request.method;
     let descript = findDescription(item);
@@ -135,7 +137,13 @@ const PostmanFile = (item) => {
         
 
     let url = item.item.request.url;
-    let server = `${url.protocol}://${url.host.join(".")}:${url.port}/${path}`
+    let server = "";
+    if(url.port === undefined) {
+        server = `${url.protocol}://${url.host.join(".")}/${path}`
+    } else {
+        server = `${url.protocol}://${url.host.join(".")}:${url.port}/${path}`
+    }
+    
     //console.log(server);
 
     const [code, setCode] = React.useState(
@@ -226,8 +234,8 @@ const PostmanFile = (item) => {
 
                 <div style={{marginBottom: "40px"}}></div>
                 <div className={styles.postman_execute_wrap}>
-                    <div onClick={() => {execute(method, server, fileRef, setResult)}}>Execute</div>
-                    <div onClick={() => {cancel(fileRef)}}>Cancle</div>
+                    <div onClick={() => {execute(method, server, fileRef, setResult, cancleToken)}}>Execute</div>
+                    <div onClick={() => {cancel(fileRef, cancleToken, setCancleToken)}}>Cancle</div>
                 </div>
 
 

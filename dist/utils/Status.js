@@ -12,7 +12,8 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-var execute = function execute(method, server, ref, setCode) {
+var execute = function execute(method, server, ref, setCode, cancleToken) {
+  console.log("SERVER :", server);
   var file = ref.current;
   var inputs = Array.from(file.querySelectorAll("input"));
   var textAreas = Array.from(file.querySelectorAll("textArea"));
@@ -38,7 +39,7 @@ var execute = function execute(method, server, ref, setCode) {
     } else if (type === "Query") {
       params[type].map(function (value) {
         var key = Object.keys(value)[0];
-        query += value[key] + "&";
+        query += key + "=" + value[key] + "&";
       });
     } else if (type === "Header") {
       params[type].map(function (value) {
@@ -49,30 +50,92 @@ var execute = function execute(method, server, ref, setCode) {
   });
   param = param.slice(0, param.length - 1);
   query = query.slice(0, query.length - 1);
-  console.log("PARAM : ", param, "QUERY : ", query, "HEADER : ", header);
   var requestURL = server + "/" + param + "?" + query;
-  console.log(requestURL);
+  setCode("Receiving data...");
   if (method === "GET") {
     _axios.default.get(requestURL, {
+      cancelToken: cancleToken.token,
       headers: header
     }).then(function (res) {
-      var result = res.data.data;
+      var result = res.data;
       result = JSON.stringify(result, null, 2);
       setCode(result);
-    }).catch(function (err) {});
+    }).catch(function (err) {
+      setCode(err.message);
+    });
   } else if (method === "POST") {
     _axios.default.post(requestURL, body, {
+      cancelToken: cancleToken.token,
       headers: header
     }).then(function (res) {
-      var result = res.data.data;
+      var result = res.data;
+      result = JSON.stringify(result, null, 2);
+      console.log("axios res : ", result);
+      setCode(result);
+    }).catch(function (err) {
+      setCode(err.message);
+    });
+  } else if (method === "DELETE") {
+    _axios.default.delete(requestURL, body, {
+      cancelToken: cancleToken.token,
+      headers: header
+    }).then(function (res) {
+      var result = res.data;
       result = JSON.stringify(result, null, 2);
       setCode(result);
-    }).catch(function (err) {});
+    }).catch(function (err) {
+      setCode(err.message);
+    });
+  } else if (method === "PUT") {
+    _axios.default.delete(requestURL, body, {
+      cancelToken: cancleToken.token,
+      headers: header
+    }).then(function (res) {
+      var result = res.data;
+      console.log(result);
+      result = JSON.stringify(result, null, 2);
+      setCode(result);
+    }).catch(function (err) {
+      setCode(err.message);
+    });
+  } else if (method === "PATCH") {
+    _axios.default.patch(requestURL, body, {
+      cancelToken: cancleToken.token,
+      headers: header
+    }).then(function (res) {
+      var result = res.data;
+      result = JSON.stringify(result, null, 2);
+      setCode(result);
+    }).catch(function (err) {
+      setCode(err.message);
+    });
+  } else if (method === "OPTIONS") {
+    _axios.default.options(requestURL, body, {
+      cancelToken: cancleToken.token,
+      headers: header
+    }).then(function (res) {
+      var result = res.data;
+      result = JSON.stringify(result, null, 2);
+      setCode(result);
+    }).catch(function (err) {
+      setCode(err.message);
+    });
+  } else if (method === "HEAD") {
+    _axios.default.head(requestURL, body, {
+      cancelToken: cancleToken.token,
+      headers: header
+    }).then(function (res) {
+      var result = res.data;
+      result = JSON.stringify(result, null, 2);
+      setCode(result);
+    }).catch(function (err) {
+      setCode(err.message);
+    });
   }
 };
 exports.execute = execute;
-var cancel = function cancel(ref) {
-  alert("Cancel");
-  console.log(ref);
+var cancel = function cancel(ref, cancleToken, setCancleToken) {
+  cancleToken.cancel();
+  setCancleToken(_axios.default.CancelToken.source());
 };
 exports.cancel = cancel;

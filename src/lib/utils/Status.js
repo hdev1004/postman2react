@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const execute = (method, server, ref, setCode) => {
+export const execute = (method, server, ref, setCode,  cancleToken) => {
+    console.log("SERVER :", server);
     let file = ref.current;
     let inputs = Array.from(file.querySelectorAll("input"));
     let textAreas = Array.from(file.querySelectorAll("textArea"));
@@ -46,15 +47,15 @@ export const execute = (method, server, ref, setCode) => {
     param = param.slice(0, param.length - 1);
     query = query.slice(0, query.length - 1);
 
-    console.log("PARAM : ", param, "QUERY : ", query, "HEADER : ", header);
     let requestURL = server + "/" + param + "?" + query;
-    console.log(requestURL);
+    setCode("Receiving data...");
 
     if(method === "GET") {
         axios.get(requestURL, {
+            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
-            let result = res.data.data;
+            let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
         }).catch((err) => {
@@ -62,19 +63,22 @@ export const execute = (method, server, ref, setCode) => {
         })
     } else if(method === "POST") {
         axios.post(requestURL, body, {
+            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
-            let result = res.data.data;
+            let result = res.data;
             result = JSON.stringify(result, null, 2);
+            console.log("axios res : ",result)
             setCode(result);
         }).catch((err) => {
             setCode(err.message);
         })
     } else if(method === "DELETE") {
         axios.delete(requestURL, body, {
+            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
-            let result = res.data.data;
+            let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
         }).catch((err) => {
@@ -82,9 +86,11 @@ export const execute = (method, server, ref, setCode) => {
         })
     } else if(method === "PUT") {
         axios.delete(requestURL, body, {
+            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
-            let result = res.data.data;
+            let result = res.data;
+            console.log(result);
             result = JSON.stringify(result, null, 2);
             setCode(result);
         }).catch((err) => {
@@ -92,9 +98,10 @@ export const execute = (method, server, ref, setCode) => {
         })
     } else if(method === "PATCH") {
         axios.patch(requestURL, body, {
+            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
-            let result = res.data.data;
+            let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
         }).catch((err) => {
@@ -102,9 +109,10 @@ export const execute = (method, server, ref, setCode) => {
         })
     } else if(method === "OPTIONS") {
         axios.options(requestURL, body, {
+            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
-            let result = res.data.data;
+            let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
         }).catch((err) => {
@@ -112,9 +120,10 @@ export const execute = (method, server, ref, setCode) => {
         })
     } else if(method === "HEAD") {
         axios.head(requestURL, body, {
+            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
-            let result = res.data.data;
+            let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
         }).catch((err) => {
@@ -124,7 +133,7 @@ export const execute = (method, server, ref, setCode) => {
     
 }
 
-export const cancel = (ref) => {
-    alert("Cancel");
-    console.log(ref);
+export const cancel = (ref,  cancleToken, setCancleToken) => {
+    cancleToken.cancel()
+    setCancleToken(axios.CancelToken.source())
 }
