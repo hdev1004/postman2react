@@ -40,7 +40,7 @@ const PostmanQuery = ({kind, data}) => {
                                             <div className={styles.input_delete} onClick={() => {
                                                 let tempData = queryData.value;
                                                 tempData.splice(index, 1);
-                                                console.log(tempData);
+                                                //console.log(tempData);
                                                 setQueryData({
                                                     ...queryData,
                                                     value: tempData

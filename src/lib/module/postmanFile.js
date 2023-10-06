@@ -50,8 +50,6 @@ const getQuery = (item) => {
         })
     })
 
-    console.log("RESULT : ", result);
-
     return result;
 }
 

@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export const execute = (method, server, ref, setCode,  cancleToken) => {
-    console.log("SERVER :", server);
     let file = ref.current;
     let inputs = Array.from(file.querySelectorAll("input"));
     let textAreas = Array.from(file.querySelectorAll("textArea"));
@@ -22,7 +21,6 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
     let query = "";
     let header = {};
 
-    console.log(params);
     Object.keys(params).map((type) => {
         if(type === "Param") {
             params[type].map((value) => {
@@ -68,7 +66,7 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
         }).then((res) => {
             let result = res.data;
             result = JSON.stringify(result, null, 2);
-            console.log("axios res : ",result)
+            //console.log("axios res : ",result)
             setCode(result);
         }).catch((err) => {
             setCode(err.message);
@@ -90,7 +88,6 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
             headers: header
         }).then((res) => {
             let result = res.data;
-            console.log(result);
             result = JSON.stringify(result, null, 2);
             setCode(result);
         }).catch((err) => {
