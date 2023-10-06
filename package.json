@@ -16,7 +16,7 @@
     "@uiw/react-textarea-code-editor": "^2.1.7",
     "axios": "^1.5.0",
     "firebase": "^10.4.0",
-    "postman2react": "^0.1.1",
+    "postman2react": "^0.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",

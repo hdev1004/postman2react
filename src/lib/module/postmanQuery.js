@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../css/postman2React.module.css";
-import TrashWhite from "../../images/recycle-bin_white.png";
-import TrashRed from "../../images/recycle-bin_red.png";
+import TrashWhite from "../images/recycle-bin_white.png";
+import TrashRed from "../images/recycle-bin_red.png";
 
 const PostmanQuery = ({kind, data}) => {
     let [addParam, setAddParam] = useState([]);
