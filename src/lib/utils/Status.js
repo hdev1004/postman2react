@@ -1,6 +1,7 @@
 import axios from "axios";
 
-export const execute = (method, server, ref, setCode,  cancleToken) => {
+export const execute = (method, server, ref, setCode, token) => {
+    document.querySelector(`.${token}`).innerHTML = false;
     let file = ref.current;
     let inputs = Array.from(file.querySelectorAll("input"));
     let textAreas = Array.from(file.querySelectorAll("textArea"));
@@ -50,9 +51,13 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
 
     if(method === "GET") {
         axios.get(requestURL, {
-            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
+            let trigger = JSON.parse(document.querySelector(`.${token}`).innerHTML);
+            if(trigger) {
+                document.querySelector(`.${token}`).innerHTML = false;
+                return;
+            }
             let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
@@ -61,9 +66,13 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
         })
     } else if(method === "POST") {
         axios.post(requestURL, body, {
-            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
+            let trigger = JSON.parse(document.querySelector(`.${token}`).innerHTML);
+            if(trigger) {
+                document.querySelector(`.${token}`).innerHTML = false;
+                return;
+            }
             let result = res.data;
             result = JSON.stringify(result, null, 2);
             //console.log("axios res : ",result)
@@ -73,9 +82,13 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
         })
     } else if(method === "DELETE") {
         axios.delete(requestURL, body, {
-            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
+            let trigger = JSON.parse(document.querySelector(`.${token}`).innerHTML);
+            if(trigger) {
+                document.querySelector(`.${token}`).innerHTML = false;
+                return;
+            }
             let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
@@ -84,9 +97,13 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
         })
     } else if(method === "PUT") {
         axios.delete(requestURL, body, {
-            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
+            let trigger = JSON.parse(document.querySelector(`.${token}`).innerHTML);
+            if(trigger) {
+                document.querySelector(`.${token}`).innerHTML = false;
+                return;
+            }
             let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
@@ -95,9 +112,13 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
         })
     } else if(method === "PATCH") {
         axios.patch(requestURL, body, {
-            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
+            let trigger = JSON.parse(document.querySelector(`.${token}`).innerHTML);
+            if(trigger) {
+                document.querySelector(`.${token}`).innerHTML = false;
+                return;
+            }
             let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
@@ -106,9 +127,13 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
         })
     } else if(method === "OPTIONS") {
         axios.options(requestURL, body, {
-            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
+            let trigger = JSON.parse(document.querySelector(`.${token}`).innerHTML);
+            if(trigger) {
+                document.querySelector(`.${token}`).innerHTML = false;
+                return;
+            }
             let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
@@ -117,9 +142,13 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
         })
     } else if(method === "HEAD") {
         axios.head(requestURL, body, {
-            cancelToken: cancleToken.token,
             headers: header
         }).then((res) => {
+            let trigger = JSON.parse(document.querySelector(`.${token}`).innerHTML);
+            if(trigger) {
+                document.querySelector(`.${token}`).innerHTML = false;
+                return;
+            }
             let result = res.data;
             result = JSON.stringify(result, null, 2);
             setCode(result);
@@ -130,7 +159,7 @@ export const execute = (method, server, ref, setCode,  cancleToken) => {
     
 }
 
-export const cancel = (ref,  cancleToken, setCancleToken) => {
-    cancleToken.cancel()
-    setCancleToken(axios.CancelToken.source())
+export const cancel = (ref, token) => {
+    let element = document.querySelector(`.${token}`);
+    element.innerHTML = true;
 }

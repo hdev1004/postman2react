@@ -6,9 +6,7 @@ import postmanJson from "./postman_collection.json";
 
 function App() {
   return (
-    <div>
-        <Postman2React postmanJson={postmanJson} url={"*"} equalize={true}></Postman2React>
-    </div>
+    <Postman2React postmanJson={postmanJson} url={"*"} equalize={true}></Postman2React>
   );
 }
 

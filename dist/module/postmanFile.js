@@ -60,7 +60,6 @@ var getQuery = function getQuery(item) {
       value: dupCheck[data]
     });
   });
-  console.log("RESULT : ", result);
   return result;
 };
 var getHeader = function getHeader(item) {
@@ -97,7 +96,7 @@ var methodStylingTitle = function methodStylingTitle(method) {
 };
 var PostmanFile = function PostmanFile(item) {
   var _item$item$request$ur;
-  var _useState = (0, _react.useState)(_axios.default.CancelToken.source()),
+  var _useState = (0, _react.useState)(undefined),
     _useState2 = _slicedToArray(_useState, 2),
     cancleToken = _useState2[0],
     setCancleToken = _useState2[1];

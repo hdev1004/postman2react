@@ -1,6 +1,6 @@
 {
   "name": "postman2react",
-  "version": "0.1.7",
+  "version": "0.1.11",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "repository": {
@@ -16,7 +16,7 @@
     "@uiw/react-textarea-code-editor": "^2.1.7",
     "axios": "^1.5.0",
     "firebase": "^10.4.0",
-    "postman2react": "^0.1.6",
+    "postman2react": "^0.1.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",

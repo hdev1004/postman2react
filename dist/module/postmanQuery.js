@@ -85,7 +85,7 @@ var PostmanQuery = function PostmanQuery(_ref) {
       onClick: function onClick() {
         var tempData = queryData.value;
         tempData.splice(index, 1);
-        console.log(tempData);
+        //console.log(tempData);
         setQueryData(_objectSpread(_objectSpread({}, queryData), {}, {
           value: tempData
         }));

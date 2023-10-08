@@ -13,7 +13,6 @@ function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key i
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 var execute = function execute(method, server, ref, setCode, cancleToken) {
-  console.log("SERVER :", server);
   var file = ref.current;
   var inputs = Array.from(file.querySelectorAll("input"));
   var textAreas = Array.from(file.querySelectorAll("textArea"));
@@ -29,7 +28,6 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
   var param = "";
   var query = "";
   var header = {};
-  console.log(params);
   Object.keys(params).map(function (type) {
     if (type === "Param") {
       params[type].map(function (value) {
@@ -70,7 +68,7 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
     }).then(function (res) {
       var result = res.data;
       result = JSON.stringify(result, null, 2);
-      console.log("axios res : ", result);
+      //console.log("axios res : ",result)
       setCode(result);
     }).catch(function (err) {
       setCode(err.message);
@@ -92,7 +90,6 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
       headers: header
     }).then(function (res) {
       var result = res.data;
-      console.log(result);
       result = JSON.stringify(result, null, 2);
       setCode(result);
     }).catch(function (err) {
@@ -135,7 +132,7 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
 };
 exports.execute = execute;
 var cancel = function cancel(ref, cancleToken, setCancleToken) {
-  cancleToken.cancel();
-  setCancleToken(_axios.default.CancelToken.source());
+  // cancleToken.cancel()
+  //setCancleToken(axios.CancelToken.source())
 };
 exports.cancel = cancel;

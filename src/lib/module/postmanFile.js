@@ -3,8 +3,6 @@ import styles from "../css/postman2React.module.css";
 import PostmanQuery from "./postmanQuery";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import { cancel, execute } from "../utils/Status";
-import axios from "axios";
-
 
 const findDescription = (item) => {
     let query = item.item.request.url.query; 
@@ -111,7 +109,7 @@ const methodStylingTitle = (method) => {
 
 
 const PostmanFile = (item) => {
-    let [cancleToken, setCancleToken] = useState(axios.CancelToken.source());
+    let [token, setToken] = useState(Math.random().toString(36).substring(2, 11));
     let [isClick, setIsClick] = useState(false);
     let method = item.item.request.method;
     let descript = findDescription(item);
@@ -144,7 +142,7 @@ const PostmanFile = (item) => {
     
     //console.log(server);
 
-    const [code, setCode] = React.useState(
+    let [code, setCode] = useState(
         body === undefined ? `` : JSON.stringify(body, null, 2)
       );
 
@@ -232,14 +230,18 @@ const PostmanFile = (item) => {
 
                 <div style={{marginBottom: "40px"}}></div>
                 <div className={styles.postman_execute_wrap}>
-                    <div onClick={() => {execute(method, server, fileRef, setResult, cancleToken)}}>Execute</div>
-                    <div onClick={() => {cancel(fileRef, cancleToken, setCancleToken)}}>Cancle</div>
+                    <div onClick={() => {execute(method, server, fileRef, setResult, token)}}>Execute</div>
+                    <div onClick={() => {setResult("Canceld"); cancel(fileRef, token)}}>Cancle</div>
                 </div>
 
 
                 <div style={{marginBottom: "80px"}}></div>
                 <div className={styles.postman_folder_file_param}>
                     Result
+                </div>
+
+                <div style={{display: "none"}} className={token}>
+                    false
                 </div>
 
                 <div className={styles.postman_scroll} style={{maxHeight: "400px",  overflow: "auto"}}>

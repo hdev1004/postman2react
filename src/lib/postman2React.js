@@ -43,7 +43,7 @@ const Postman2React = ({postmanJson, url, equalize}) => {
                     <PostmanFolder title={item} item={postman[item]}></PostmanFolder>
                 ))
             }
-        </div>
+        </div>    
     )
 };
 
