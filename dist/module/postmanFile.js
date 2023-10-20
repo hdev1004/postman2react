@@ -96,10 +96,10 @@ var methodStylingTitle = function methodStylingTitle(method) {
 };
 var PostmanFile = function PostmanFile(item) {
   var _item$item$request$ur;
-  var _useState = (0, _react.useState)(undefined),
+  var _useState = (0, _react.useState)(_axios.default.CancelToken.source()),
     _useState2 = _slicedToArray(_useState, 2),
-    cancleToken = _useState2[0],
-    setCancleToken = _useState2[1];
+    cancelToken = _useState2[0],
+    setCancelToken = _useState2[1];
   var _useState3 = (0, _react.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
     isClick = _useState4[0],
@@ -130,14 +130,14 @@ var PostmanFile = function PostmanFile(item) {
 
   //console.log(server);
 
-  var _React$useState = _react.default.useState(body === undefined ? "" : JSON.stringify(body, null, 2)),
-    _React$useState2 = _slicedToArray(_React$useState, 2),
-    code = _React$useState2[0],
-    setCode = _React$useState2[1];
-  var _useState5 = (0, _react.useState)(""),
+  var _useState5 = (0, _react.useState)(body === undefined ? "" : JSON.stringify(body, null, 2)),
     _useState6 = _slicedToArray(_useState5, 2),
-    result = _useState6[0],
-    setResult = _useState6[1];
+    code = _useState6[0],
+    setCode = _useState6[1];
+  var _useState7 = (0, _react.useState)(""),
+    _useState8 = _slicedToArray(_useState7, 2),
+    result = _useState8[0],
+    setResult = _useState8[1];
   return /*#__PURE__*/_react.default.createElement("div", {
     ref: fileRef,
     className: "".concat(isClick ? _postman2ReactModule.default.postman_folder_file : _postman2ReactModule.default.postman_folder_file_hidden, " ").concat(methodStyling(method))
@@ -196,13 +196,13 @@ var PostmanFile = function PostmanFile(item) {
     className: _postman2ReactModule.default.postman_execute_wrap
   }, /*#__PURE__*/_react.default.createElement("div", {
     onClick: function onClick() {
-      (0, _Status.execute)(method, server, fileRef, setResult, cancleToken);
+      (0, _Status.execute)(method, server, fileRef, setResult, cancelToken, setCancelToken);
     }
   }, "Execute"), /*#__PURE__*/_react.default.createElement("div", {
     onClick: function onClick() {
-      (0, _Status.cancel)(fileRef, cancleToken, setCancleToken);
+      (0, _Status.cancel)(fileRef, setResult, cancelToken, setCancelToken);
     }
-  }, "Cancle")), /*#__PURE__*/_react.default.createElement("div", {
+  }, "Cancel")), /*#__PURE__*/_react.default.createElement("div", {
     style: {
       marginBottom: "80px"
     }

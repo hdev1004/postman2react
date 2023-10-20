@@ -12,7 +12,7 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-var execute = function execute(method, server, ref, setCode, cancleToken) {
+var execute = function execute(method, server, ref, setCode, cancelToken, setCancelToken) {
   var file = ref.current;
   var inputs = Array.from(file.querySelectorAll("input"));
   var textAreas = Array.from(file.querySelectorAll("textArea"));
@@ -52,7 +52,7 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
   setCode("Receiving data...");
   if (method === "GET") {
     _axios.default.get(requestURL, {
-      cancelToken: cancleToken.token,
+      cancelToken: cancelToken.token,
       headers: header
     }).then(function (res) {
       var result = res.data;
@@ -63,7 +63,7 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
     });
   } else if (method === "POST") {
     _axios.default.post(requestURL, body, {
-      cancelToken: cancleToken.token,
+      cancelToken: cancelToken.token,
       headers: header
     }).then(function (res) {
       var result = res.data;
@@ -75,7 +75,7 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
     });
   } else if (method === "DELETE") {
     _axios.default.delete(requestURL, body, {
-      cancelToken: cancleToken.token,
+      cancelToken: cancelToken.token,
       headers: header
     }).then(function (res) {
       var result = res.data;
@@ -86,7 +86,7 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
     });
   } else if (method === "PUT") {
     _axios.default.delete(requestURL, body, {
-      cancelToken: cancleToken.token,
+      cancelToken: cancelToken.token,
       headers: header
     }).then(function (res) {
       var result = res.data;
@@ -97,7 +97,7 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
     });
   } else if (method === "PATCH") {
     _axios.default.patch(requestURL, body, {
-      cancelToken: cancleToken.token,
+      cancelToken: cancelToken.token,
       headers: header
     }).then(function (res) {
       var result = res.data;
@@ -108,7 +108,7 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
     });
   } else if (method === "OPTIONS") {
     _axios.default.options(requestURL, body, {
-      cancelToken: cancleToken.token,
+      cancelToken: cancelToken.token,
       headers: header
     }).then(function (res) {
       var result = res.data;
@@ -119,7 +119,7 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
     });
   } else if (method === "HEAD") {
     _axios.default.head(requestURL, body, {
-      cancelToken: cancleToken.token,
+      cancelToken: cancelToken.token,
       headers: header
     }).then(function (res) {
       var result = res.data;
@@ -131,8 +131,8 @@ var execute = function execute(method, server, ref, setCode, cancleToken) {
   }
 };
 exports.execute = execute;
-var cancel = function cancel(ref, cancleToken, setCancleToken) {
-  // cancleToken.cancel()
-  //setCancleToken(axios.CancelToken.source())
+var cancel = function cancel(ref, setResult, cancelToken, setCancelToken) {
+  cancelToken.cancel("Canceld");
+  setCancelToken(_axios.default.CancelToken.source());
 };
 exports.cancel = cancel;
