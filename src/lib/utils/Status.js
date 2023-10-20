@@ -6,7 +6,7 @@ export const execute = (method, server, ref, setCode, cancelToken, setCancelToke
     let textAreas = Array.from(file.querySelectorAll("textArea"));
     let body = {};
     if(textAreas.length === 2) {
-        body = JSON.parse(textAreas[0].value);
+        body = JSON.parse(textAreas[0].value);   
     }
     let params = {};
 

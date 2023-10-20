@@ -18,7 +18,7 @@ const findDescription = (item) => {
     return descript;
 }
 
-const getQuery = (item) => {  
+const getQuery = (item) => {                      
     let query = item.item.request.url.query;
     let dupCheck = {};
     let result = [];
