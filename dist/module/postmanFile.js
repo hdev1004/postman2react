@@ -10,7 +10,6 @@ var _postman2ReactModule = _interopRequireDefault(require("../css/postman2React.
 var _postmanQuery = _interopRequireDefault(require("./postmanQuery"));
 var _reactTextareaCodeEditor = _interopRequireDefault(require("@uiw/react-textarea-code-editor"));
 var _Status = require("../utils/Status");
-var _axios = _interopRequireDefault(require("axios"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -96,10 +95,10 @@ var methodStylingTitle = function methodStylingTitle(method) {
 };
 var PostmanFile = function PostmanFile(item) {
   var _item$item$request$ur;
-  var _useState = (0, _react.useState)(_axios.default.CancelToken.source()),
+  var _useState = (0, _react.useState)(new AbortController()),
     _useState2 = _slicedToArray(_useState, 2),
-    cancelToken = _useState2[0],
-    setCancelToken = _useState2[1];
+    abortController = _useState2[0],
+    setAbortController = _useState2[1];
   var _useState3 = (0, _react.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
     isClick = _useState4[0],
@@ -196,11 +195,11 @@ var PostmanFile = function PostmanFile(item) {
     className: _postman2ReactModule.default.postman_execute_wrap
   }, /*#__PURE__*/_react.default.createElement("div", {
     onClick: function onClick() {
-      (0, _Status.execute)(method, server, fileRef, setResult, cancelToken, setCancelToken);
+      (0, _Status.execute)(method, server, fileRef, setResult, abortController, setAbortController);
     }
   }, "Execute"), /*#__PURE__*/_react.default.createElement("div", {
     onClick: function onClick() {
-      (0, _Status.cancel)(fileRef, setResult, cancelToken, setCancelToken);
+      (0, _Status.cancel)(fileRef, setResult, abortController, setAbortController);
     }
   }, "Cancel")), /*#__PURE__*/_react.default.createElement("div", {
     style: {

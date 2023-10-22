@@ -16,8 +16,8 @@ const PostmanFolder = ({title, item}) => {
 
         <div className={isClick ? styles.postman_folder_docs : styles.postman_folder_docs_hidden}>
             {
-                item.map((doc) => ( 
-                    <PostmanFile item={doc}></PostmanFile>
+                item.map((doc, index) => (
+                    <PostmanFile key={`file${index}`}item={doc}></PostmanFile>
                 ))
             }
             </div>

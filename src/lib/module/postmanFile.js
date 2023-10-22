@@ -53,10 +53,6 @@ const getQuery = (item) => {
 
 const getHeader = (item) => {
     let header = item.item.request.header;
-
-    header.map((item) => {
-        
-    })
     return header;
 }
 
@@ -181,20 +177,20 @@ const PostmanFile = (item) => {
 
                             <div className={styles.postman_folder_file_wrap}>
                                 {
-                                    header.map((data) => (
-                                        <PostmanQuery kind={"Header"} data={data}></PostmanQuery>
+                                    header.map((data, index) => (
+                                        <PostmanQuery key={`QueryHeader${index}`} kind={"Header"} data={data}></PostmanQuery>
                                     ))
                                 }
 
                                 {
-                                    param.map((data) => (
-                                        <PostmanQuery kind={"Param"} data={data}></PostmanQuery>
+                                    param.map((data, index) => (
+                                        <PostmanQuery key={`QueryParam${index}`}  kind={"Param"} data={data}></PostmanQuery>
                                     ))
                                 }
 
                                 {
-                                    query.map((data) => (
-                                        <PostmanQuery kind={"Query"} data={data}></PostmanQuery>
+                                    query.map((data, index) => (
+                                        <PostmanQuery key={`Queryquery${index}`} kind={"Query"} data={data}></PostmanQuery>
                                     ))
                                 }
                             </div>

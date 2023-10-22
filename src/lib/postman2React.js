@@ -39,8 +39,8 @@ const Postman2React = ({postmanJson, url, equalize}) => {
     return (
         <div className={styles.postman_form}>
             {
-                postman && Object.keys(postman).map((item) => (
-                    <PostmanFolder title={item} item={postman[item]}></PostmanFolder>
+                postman && Object.keys(postman).map((item, index) => (
+                    <PostmanFolder key={`Folder${index}`} title={item} item={postman[item]}></PostmanFolder>
                 ))
             }
         </div>    
