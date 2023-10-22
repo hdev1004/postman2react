@@ -3,7 +3,6 @@ import styles from "../css/postman2React.module.css";
 import PostmanQuery from "./postmanQuery";
 import CodeEditor from '@uiw/react-textarea-code-editor';
 import { cancel, execute } from "../utils/Status";
-import axios from "axios";
 
 const findDescription = (item) => {
     let query = item.item.request.url.query; 
@@ -110,7 +109,7 @@ const methodStylingTitle = (method) => {
 
 
 const PostmanFile = (item) => {
-    let [cancelToken, setCancelToken] = useState(axios.CancelToken.source());
+    let [abortController, setAbortController] = useState(new AbortController())
     let [isClick, setIsClick] = useState(false);
     let method = item.item.request.method;
     let descript = findDescription(item);
@@ -231,8 +230,8 @@ const PostmanFile = (item) => {
 
                 <div style={{marginBottom: "40px"}}></div>
                 <div className={styles.postman_execute_wrap}>
-                    <div onClick={() => {execute(method, server, fileRef, setResult, cancelToken, setCancelToken)}}>Execute</div>
-                    <div onClick={() => { cancel(fileRef, setResult, cancelToken, setCancelToken)}}>Cancel</div>
+                    <div onClick={() => {execute(method, server, fileRef, setResult, abortController, setAbortController)}}>Execute</div>
+                    <div onClick={() => { cancel(fileRef, setResult, abortController, setAbortController)}}>Cancel</div>
                 </div>
 
 

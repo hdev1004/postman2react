@@ -1,6 +1,6 @@
-import axios from "axios";
 
-export const execute = (method, server, ref, setCode, cancelToken, setCancelToken) => {
+
+export const execute = async(method, server, ref, setCode, abortController, setAbortController) => {
     let file = ref.current;
     let inputs = Array.from(file.querySelectorAll("input"));
     let textAreas = Array.from(file.querySelectorAll("textArea"));
@@ -46,98 +46,38 @@ export const execute = (method, server, ref, setCode, cancelToken, setCancelToke
     query = query.slice(0, query.length - 1);
 
     let requestURL = server + "/" + param + "?" + query;
-    setCode("Receiving data...");
-
-    if(method === "GET") {
-        axios.get(requestURL, {
-            cancelToken: cancelToken.token,
-            headers: header
-        }).then((res) => {
-           
-            let result = res.data;
-            result = JSON.stringify(result, null, 2);
-            setCode(result);
-        }).catch((err) => {
-            setCode(err.message);
-        })
-    } else if(method === "POST") {
-        axios.post(requestURL, body, {
-            cancelToken: cancelToken.token,
-            headers: header
-        }).then((res) => {
-           
-            let result = res.data;
-            result = JSON.stringify(result, null, 2);
-            //console.log("axios res : ",result)
-            setCode(result);
-        }).catch((err) => {
-            setCode(err.message);
-        })
-    } else if(method === "DELETE") {
-        axios.delete(requestURL, body, {
-            cancelToken: cancelToken.token,
-            headers: header
-        }).then((res) => {
-           
-            let result = res.data;
-            result = JSON.stringify(result, null, 2);
-            setCode(result);
-        }).catch((err) => {
-            setCode(err.message);
-        })
-    } else if(method === "PUT") {
-        axios.delete(requestURL, body, {
-            cancelToken: cancelToken.token,
-            headers: header
-        }).then((res) => {
-          
-            let result = res.data;
-            result = JSON.stringify(result, null, 2);
-            setCode(result);
-        }).catch((err) => {
-            setCode(err.message);
-        })
-    } else if(method === "PATCH") {
-        axios.patch(requestURL, body, {
-            cancelToken: cancelToken.token,
-            headers: header
-        }).then((res) => {
-            
-            let result = res.data;
-            result = JSON.stringify(result, null, 2);
-            setCode(result);
-        }).catch((err) => {
-            setCode(err.message);
-        })
-    } else if(method === "OPTIONS") {
-        axios.options(requestURL, body, {
-            cancelToken: cancelToken.token,
-            headers: header
-        }).then((res) => {
-           
-            let result = res.data;
-            result = JSON.stringify(result, null, 2);
-            setCode(result);
-        }).catch((err) => {
-            setCode(err.message);
-        })
-    } else if(method === "HEAD") {
-        axios.head(requestURL, body, {
-            cancelToken: cancelToken.token,
-            headers: header
-        }).then((res) => {
-          
-            let result = res.data;
-            result = JSON.stringify(result, null, 2);
-            setCode(result);
-        }).catch((err) => {
-            setCode(err.message);
-        })
-    }
     
+    
+    try {
+        setCode("Receiving data...");
+            if(method === "GET") {
+                const response = await fetch(requestURL, {
+                    method: method,
+                    signal: abortController.signal,
+                    headers: header
+                })
+                let text = await response.text();
+                text = JSON.parse(text);
+                setCode(JSON.stringify(text.data, null, 2));
+            } else {
+                const response = await fetch(requestURL, {
+                    method: method,
+                    signal: abortController.signal,
+                    headers: header
+                })
+                let text = await response.text();
+                text = JSON.parse(text);
+                setCode(JSON.stringify(text.data, null, 2));
+            }
+       
+       
+    } catch(err) {
+        console.error(err)
+    } 
 }
 
-export const cancel = (ref, setResult, cancelToken, setCancelToken) => {
-    cancelToken.cancel("Canceld");
-    setCancelToken(axios.CancelToken.source());
+export const cancel = (ref, setResult, abortController, setAbortController) => {
+    abortController.abort();
+    setAbortController(new AbortController())
+    setResult("Canceld")
 }
